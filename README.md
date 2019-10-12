@@ -1,6 +1,11 @@
 # kubectl-remove-in-allns
 
-<span style="color:red; font:24px; ">This has not been tested thoroughly. Not recommended for use in Production and use at your own risk. </span>
+## Warnings
+
+```diff
+- This is not recommented for use in Production
+- There are no unit tests covering this (yet). please use it at your own risk.
+```
 
 This kubectl plugin can delete a given resource from all the namespaces
 
