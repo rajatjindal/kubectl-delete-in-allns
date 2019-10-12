@@ -1,35 +1,22 @@
-# kubectl-modify-secret
+# kubectl-remove-in-allns
 
-`kubectl-modify-secret` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that allows user to modify the secret without having to worry about doing base64 encoding/decoding.
+<span style="color:red; font:24px; ">This has not been tested thoroughly. Not recommended for use in Production and use at your own risk. </span>
 
-This plugin pulls the secret from Kubernetes, and open the configured editor with just the decoded secret data. Once user makes changes, save and quit the editor, the plugin automatically apply the updated data to Kubernetes.
+This kubectl plugin can delete a given resource from all the namespaces
 
-![using kubectl-modify-secret plugin](demo/usage.gif)
-
-# Installing
-- install `krew` using instructions [here](https://github.com/kubernetes-sigs/krew#installation)
-- run `kubectl krew update`
-- run `kubectl krew install modify-secret`
-
-![installing kubectl-modify-secret plugin](demo/installation.gif)
-
-
-# Usage
-
-- use namespace and kubeconfig from $KUBECONFIG current context
+sample usage
 
 ```bash
-    kubectl modify-secret xyz
+$ ./kubectl-remove-in-allns configmap my-test-config
+INFO[0000] configmap "my-test-config" deleted from namespace "default" 
+INFO[0000] configmap "my-test-config" not found in namespace "kube-node-lease" 
+INFO[0000] configmap "my-test-config" not found in namespace "kube-public" 
+INFO[0000] configmap "my-test-config" deleted from namespace "kube-system" 
+INFO[0000] configmap "my-test-config" deleted from namespace "test" 
 ```
 
-- provide namespace explicitly
-
-```bash
-    kubectl modify-secret xyz -n kube-system
-```
-
-- use different kubeconfig file
-
-```bash
-    kubectl modify-secret xyz --kubeconfig /path/to/different/kube/config
-```
+supports following resources right now (PR welcome for supporting other resource types):
+- configmaps
+- secrets
+- ingress
+- deployments
